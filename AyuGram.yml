@@ -2,23 +2,38 @@ id: com.ayugram.desktop
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
-command: Telegram  # or whatever the executable's name is
+command: AyuGram
 finish-args:
   - --socket=x11
   - --socket=wayland
   - --socket=pulseaudio
   - --share=network
   - --device=dri
+  - --talk-name=org.kde.StatusNotifierWatcher  # Allow tray icon support
 
 modules:
   - name: ayugram-desktop
     buildsystem: simple
     build-commands:
+      # Install the AyuGram binary
       - mkdir -p /app/bin
-      - install -Dm755 Telegram /app/bin/Telegram
+      - install -Dm755 AyuGram /app/bin/AyuGram
+
+      # Install the .desktop file
+      - mkdir -p /app/share/applications/
+      - install -Dm644 com.ayugram.desktop.desktop /app/share/applications/com.ayugram.desktop.desktop
+
+      # Install the 128x128 icon
+      - mkdir -p /app/share/icons/hicolor/128x128/apps/
+      - install -Dm644 com.ayugram.desktop.png /app/share/icons/hicolor/128x128/apps/com.ayugram.desktop.png
+
     sources:
       - type: file
-        path: /home/user/Downloads/ayugram-flatpak/Telegram
-        dest-filename: Telegram
-
-
+        path: /home/user/Downloads/ayugram-flatpak/AyuGram
+        dest-filename: AyuGram
+      - type: file
+        path: /home/user/Downloads/ayugram-flatpak/com.ayugram.desktop.desktop
+        dest-filename: com.ayugram.desktop.desktop
+      - type: file
+        path: /home/user/Downloads/ayugram-flatpak/com.ayugram.desktop.png
+        dest-filename: com.ayugram.desktop.png
