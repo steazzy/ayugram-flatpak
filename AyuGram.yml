@@ -1,0 +1,24 @@
+id: com.ayugram.desktop
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: Telegram  # or whatever the executable's name is
+finish-args:
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --share=network
+  - --device=dri
+
+modules:
+  - name: ayugram-desktop
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/bin
+      - install -Dm755 Telegram /app/bin/Telegram
+    sources:
+      - type: file
+        path: /home/user/Downloads/ayugram-flatpak/Telegram
+        dest-filename: Telegram
+
+
